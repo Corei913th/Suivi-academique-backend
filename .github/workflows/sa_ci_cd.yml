@@ -8,7 +8,7 @@ on:
 
 jobs:
   security:
-    name:  Security Audit
+    name: 🛡️ Security Audit & SAST
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,11 +17,28 @@ jobs:
         with:
           php-version: '8.2'
           coverage: none
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Composer Audit
         run: composer audit
+      - name: Larastan SAST
+        run: ./vendor/bin/phpstan analyse --error-format=github --memory-limit=1G
+
+  iac:
+    name: 🛡️ IaC & Docker Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          format: 'table'
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
 
   lint:
-    name:  Lint & Style
+    name: 🧹 Lint & Style
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,8 +53,8 @@ jobs:
         run: ./vendor/bin/pint --test
 
   tests:
-    name:  Feature & Unit Tests
-    needs: [security, lint]
+    name: 🧪 Feature & Unit Tests
+    needs: [security, lint, iac]
     runs-on: ubuntu-latest
     services:
       postgres:
