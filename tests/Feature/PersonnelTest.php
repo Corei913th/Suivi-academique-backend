@@ -2,13 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Personnel;
-use Illuminate\Support\Facades\Hash; // Ajout pour Hash
+use Illuminate\Support\Facades\Hash;
+use Tests\TestCase; // Ajout pour Hash
 
 class PersonnelTest extends TestCase
 {
-
     public function test_get_personnels()
     {
         $response = $this->getJson('/api/personnels');
@@ -17,8 +16,8 @@ class PersonnelTest extends TestCase
 
     public function test_create_personnel()
     {
-        $code = 'PERS-TEST-' . rand(1000, 9999);
-        $login = 'user' . rand(1000, 9999);
+        $code = 'PERS-TEST-'.rand(1000, 9999);
+        $login = 'user'.rand(1000, 9999);
 
         $data = [
             'code_pers' => $code,
@@ -28,7 +27,7 @@ class PersonnelTest extends TestCase
             'phone_pers' => '00000000',
             'login_pers' => $login,
             'pwd_pers' => 'password123',
-            'type_pers' => 'ENSEIGNANT' // Enum strict
+            'type_pers' => 'ENSEIGNANT', // Enum strict
         ];
 
         $response = $this->postJson('/api/personnels', $data);
@@ -40,15 +39,15 @@ class PersonnelTest extends TestCase
 
     public function test_update_personnel()
     {
-        $code = 'PERS-UPD-' . rand(1000, 9999);
+        $code = 'PERS-UPD-'.rand(1000, 9999);
         $personnel = Personnel::create([
             'code_pers' => $code,
             'nom_pers' => 'Old Nom',
             'sexe_pers' => 'F',
             'phone_pers' => '111',
-            'login_pers' => 'login' . rand(),
+            'login_pers' => 'login'.rand(),
             'pwd_pers' => Hash::make('pass'),
-            'type_pers' => 'RESPONSABLE ACADEMIQUE'
+            'type_pers' => 'RESPONSABLE ACADEMIQUE',
         ]);
 
         $updateData = ['nom_pers' => 'New Nom'];
@@ -62,15 +61,15 @@ class PersonnelTest extends TestCase
 
     public function test_delete_personnel()
     {
-        $code = 'PERS-DEL-' . rand(1000, 9999);
+        $code = 'PERS-DEL-'.rand(1000, 9999);
         Personnel::create([
             'code_pers' => $code,
             'nom_pers' => 'To Delete',
             'sexe_pers' => 'M',
             'phone_pers' => '222',
-            'login_pers' => 'del' . rand(),
+            'login_pers' => 'del'.rand(),
             'pwd_pers' => Hash::make('pass'),
-            'type_pers' => 'ENSEIGNANT'
+            'type_pers' => 'ENSEIGNANT',
         ]);
 
         $response = $this->deleteJson("/api/personnels/{$code}");

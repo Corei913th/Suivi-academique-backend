@@ -4,16 +4,15 @@ namespace App\Exports;
 
 use App\Models\Filiere;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Style\Font;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class FiliereExport implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize
+class FiliereExport implements FromCollection, ShouldAutoSize, WithHeadings, WithStyles
 {
     public function collection()
     {
@@ -27,7 +26,7 @@ class FiliereExport implements FromCollection, WithHeadings, WithStyles, ShouldA
             'Label',
             'Description',
             'Créé le',
-            'Modifié le'
+            'Modifié le',
         ];
     }
 

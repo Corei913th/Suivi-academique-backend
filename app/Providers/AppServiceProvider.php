@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema; // 👈 ajoute cette ligne
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider; // 👈 ajoute cette ligne
 
 class AppServiceProvider extends ServiceProvider
 {

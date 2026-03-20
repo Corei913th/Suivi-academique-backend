@@ -17,10 +17,10 @@ class UeFactory extends Factory
     public function definition(): array
     {
         return [
-            "code_ue" => $this->faker->unique()->bothify('UE-###'),
-            "label_ue" => $this->faker->words(3, true),
-            "desc_ue" => $this->faker->paragraph(),
-            "code_niveau" => \App\Models\Niveau::inRandomOrder()->first()->code_niveau,
+            'code_ue' => $this->faker->unique()->bothify('UE-###'),
+            'label_ue' => $this->faker->words(3, true),
+            'desc_ue' => $this->faker->paragraph(),
+            'code_niveau' => \App\Models\Niveau::inRandomOrder()->first()->code_niveau,
         ];
     }
 }

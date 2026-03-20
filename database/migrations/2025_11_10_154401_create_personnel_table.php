@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personnel', function (Blueprint $table) {
-            $table->string("code_pers")->primary();
-            $table->string("nom_pers");
-            $table->string("prenom_pers")->nullable();
-            $table->enum("sexe_pers", ["M","F"]);
-            $table->string("phone_pers");
-            $table->string("login_pers");
-            $table->string("pwd_pers");
-            $table->enum("type_pers", ["ENSEIGNANT", "RESPONSABLE ACADEMIQUE", "RESPONSABLE DISCIPLINE"]);
+            $table->string('code_pers')->primary();
+            $table->string('nom_pers');
+            $table->string('prenom_pers')->nullable();
+            $table->enum('sexe_pers', ['M', 'F']);
+            $table->string('phone_pers');
+            $table->string('login_pers');
+            $table->string('pwd_pers');
+            $table->enum('type_pers', ['ENSEIGNANT', 'RESPONSABLE ACADEMIQUE', 'RESPONSABLE DISCIPLINE']);
             $table->timestamps();
         });
     }

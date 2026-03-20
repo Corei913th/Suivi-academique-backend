@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogApiRequests
@@ -28,24 +28,24 @@ class LogApiRequests
 
         // Chercher le token Bearer dans l'Authorization header
         $token = $request->bearerToken();
-        
+
         if ($token) {
             try {
                 // Sanctum stocke le token haché en SHA256 dans la base de données
                 $hashedToken = hash('sha256', $token);
-                
+
                 $personalAccessToken = DB::table('personal_access_tokens')
                     ->where('token', $hashedToken)
                     ->where('tokenable_type', 'App\\Models\\Personnel')
                     ->first();
-                
+
                 if ($personalAccessToken && $personalAccessToken->tokenable_id) {
                     return $personalAccessToken->tokenable_id;
                 }
             } catch (\Exception $e) {
                 \Log::channel('api')->error('Error retrieving user from token', [
                     'error' => $e->getMessage(),
-                    'path' => $request->getPathInfo()
+                    'path' => $request->getPathInfo(),
                 ]);
             }
         }

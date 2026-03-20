@@ -2,28 +2,23 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuditLogger
 {
     /**
      * Récupère l'ID de l'utilisateur connecté
-     *
-     * @return string
      */
     private static function getUserId(): string
     {
         $user = Auth::user();
+
         return $user ? $user->code_pers : 'system';
     }
 
     /**
      * Logger une action de création
-     *
-     * @param string $entity
-     * @param array $data
-     * @param string|null $userId
      */
     public static function logCreate(string $entity, array $data, ?string $userId = null): void
     {
@@ -39,11 +34,7 @@ class AuditLogger
     /**
      * Logger une action de modification
      *
-     * @param string $entity
-     * @param mixed $entityId
-     * @param array $oldData
-     * @param array $newData
-     * @param string|null $userId
+     * @param  mixed  $entityId
      */
     public static function logUpdate(string $entity, $entityId, array $oldData, array $newData, ?string $userId = null): void
     {
@@ -61,10 +52,7 @@ class AuditLogger
     /**
      * Logger une action de suppression
      *
-     * @param string $entity
-     * @param mixed $entityId
-     * @param array $data
-     * @param string|null $userId
+     * @param  mixed  $entityId
      */
     public static function logDelete(string $entity, $entityId, array $data, ?string $userId = null): void
     {
@@ -80,10 +68,6 @@ class AuditLogger
 
     /**
      * Logger une tentative de login
-     *
-     * @param string $login
-     * @param bool $success
-     * @param string|null $userId
      */
     public static function logLogin(string $login, bool $success, ?string $userId = null): void
     {
@@ -100,10 +84,6 @@ class AuditLogger
 
     /**
      * Logger une action d'erreur
-     *
-     * @param string $action
-     * @param string $message
-     * @param array $context
      */
     public static function logError(string $action, string $message, array $context = []): void
     {
@@ -117,10 +97,6 @@ class AuditLogger
 
     /**
      * Logger une action personnalisée
-     *
-     * @param string $action
-     * @param array $data
-     * @param string $level
      */
     public static function log(string $action, array $data, string $level = 'info'): void
     {

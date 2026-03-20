@@ -24,50 +24,51 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Ec $ec
  * @property Salle $salle
  * @property Personnel $personnel
- *
- * @package App\Models
  */
 class Programmation extends Model
 {
-	use HasFactory;
-	protected $table = 'programmation';
-	public $incrementing = false; // Composite primary key
-	public $timestamps = true;
-	protected $casts = [
-		'code_ec' => 'int',
-		'date' => 'datetime',
-		'heure_debut' => 'datetime',
-		'heure_fin' => 'datetime',
-		'nbre_heure' => 'int'
-	];
+    use HasFactory;
 
-	protected $fillable = [
-		'code_ec',
-		'num_salle',
-		'code_pers',
-		'date',
-		'heure_debut',
-		'heure_fin',
-		'nbre_heure',
-		'status'
-	];
+    protected $table = 'programmation';
 
-	public function ec(): BelongsTo
-	{
-		return $this->belongsTo(Ec::class, 'code_ec', 'code_ec');
-	}
+    public $incrementing = false; // Composite primary key
 
-	public function salle(): BelongsTo
-	{
-		return $this->belongsTo(Salle::class, 'num_salle', 'num_sale');
-	}
+    public $timestamps = true;
 
-	public function personnel(): BelongsTo
-	{
-		return $this->belongsTo(Personnel::class, 'code_pers', 'code_pers');
-	}
+    protected $casts = [
+        'code_ec' => 'int',
+        'date' => 'datetime',
+        'heure_debut' => 'datetime',
+        'heure_fin' => 'datetime',
+        'nbre_heure' => 'int',
+    ];
+
+    protected $fillable = [
+        'code_ec',
+        'num_salle',
+        'code_pers',
+        'date',
+        'heure_debut',
+        'heure_fin',
+        'nbre_heure',
+        'status',
+    ];
+
+    public function ec(): BelongsTo
+    {
+        return $this->belongsTo(Ec::class, 'code_ec', 'code_ec');
+    }
+
+    public function salle(): BelongsTo
+    {
+        return $this->belongsTo(Salle::class, 'num_salle', 'num_sale');
+    }
+
+    public function personnel(): BelongsTo
+    {
+        return $this->belongsTo(Personnel::class, 'code_pers', 'code_pers');
+    }
 }

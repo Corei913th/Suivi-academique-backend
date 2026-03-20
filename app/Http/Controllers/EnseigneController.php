@@ -15,20 +15,25 @@ class EnseigneController extends Controller
      *     path="/api/enseignes",
      *     summary="Récupérer tous les enseignements",
      *     tags={"Enseignements"},
+     *
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         required=false,
      *         description="Numéro de la page (par défaut 1)",
+     *
      *         @OA\Schema(type="integer", default=1)
      *     ),
+     *
      *     @OA\Parameter(
      *         name="per_page",
      *         in="query",
      *         required=false,
      *         description="Nombre d'éléments par page (par défaut 10)",
+     *
      *         @OA\Schema(type="integer", default=10)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Liste paginée des enseignements"
@@ -39,6 +44,7 @@ class EnseigneController extends Controller
     {
         $perPage = request('per_page', 10);
         $enseignes = Enseigne::with(['personnel', 'ec'])->paginate($perPage);
+
         return response()->json($enseignes, 200);
     }
 
@@ -61,7 +67,7 @@ class EnseigneController extends Controller
 
             if ($existe) {
                 return response()->json([
-                    'message' => 'Cet enseignement existe déjà pour ce personnel et cet EC'
+                    'message' => 'Cet enseignement existe déjà pour ce personnel et cet EC',
                 ], 409);
             }
 
@@ -69,15 +75,16 @@ class EnseigneController extends Controller
 
             return response()->json([
                 'message' => 'Enseignement créé avec succès',
-                'data' => $enseigne
+                'data' => $enseigne,
             ], 201);
 
         } catch (\Throwable $th) {
             if ($th instanceof ValidationException) {
                 throw $th;
             }
+
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -94,7 +101,7 @@ class EnseigneController extends Controller
             return response()->json($enseigne, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Enseignement non trouvé'
+                'message' => 'Enseignement non trouvé',
             ], 404);
         }
     }
@@ -119,15 +126,16 @@ class EnseigneController extends Controller
 
             return response()->json([
                 'message' => 'Enseignement modifié avec succès',
-                'data' => $enseigne
+                'data' => $enseigne,
             ], 200);
 
         } catch (\Throwable $th) {
             if ($th instanceof ValidationException) {
                 throw $th;
             }
+
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -141,17 +149,17 @@ class EnseigneController extends Controller
 
             if ($count === 0) {
                 return response()->json([
-                    'message' => 'Enseignement non trouvé'
+                    'message' => 'Enseignement non trouvé',
                 ], 404);
             }
 
             return response()->json([
-                'message' => 'Suppression réussie'
+                'message' => 'Suppression réussie',
             ], 200);
 
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Enseignement non trouvé'
+                'message' => 'Enseignement non trouvé',
             ], 404);
         }
     }
@@ -166,7 +174,7 @@ class EnseigneController extends Controller
             return response()->json($enseignes, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -181,7 +189,7 @@ class EnseigneController extends Controller
             return response()->json($enseignes, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }

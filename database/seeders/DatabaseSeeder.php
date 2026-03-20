@@ -2,15 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ec;
+use App\Models\Enseigne;
 use App\Models\Filiere;
 use App\Models\Niveau;
-use App\Models\Ue;
-use App\Models\Ec;
 use App\Models\Personnel;
-use App\Models\Salle;
-use App\Models\Enseigne;
 use App\Models\Programmation;
-use App\Models\User;
+use App\Models\Salle;
+use App\Models\Ue;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -92,4 +91,3 @@ class DatabaseSeeder extends Seeder
         Programmation::factory(5)->create();
     }
 }
-

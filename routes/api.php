@@ -1,31 +1,31 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EcController;
+use App\Http\Controllers\EnseigneController;
 use App\Http\Controllers\FiliereController;
 use App\Http\Controllers\NiveauController;
-use App\Http\Controllers\UEController;
-use App\Http\Controllers\EcController;
 use App\Http\Controllers\PersonnelController;
-use App\Http\Controllers\SalleController;
 use App\Http\Controllers\ProgrammationController;
-use App\Http\Controllers\EnseigneController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SalleController;
+use App\Http\Controllers\UEController;
+use Illuminate\Support\Facades\Route;
 
 // Route de test
 Route::get('/test', function () {
     return response()->json([
         'message' => 'API fonctionne correctement',
-        'timestamp' => now()->toDateTimeString()
+        'timestamp' => now()->toDateTimeString(),
     ]);
 });
 
 // Routes publiques (sans authentification)
-Route::apiResource("personnels", PersonnelController::class);
-Route::apiResource("filieres", FiliereController::class);
-Route::apiResource("niveaux", NiveauController::class);
-Route::apiResource("ues", UEController::class);
-Route::apiResource("ecs", EcController::class);
-Route::apiResource("salles", SalleController::class);
+Route::apiResource('personnels', PersonnelController::class);
+Route::apiResource('filieres', FiliereController::class);
+Route::apiResource('niveaux', NiveauController::class);
+Route::apiResource('ues', UEController::class);
+Route::apiResource('ecs', EcController::class);
+Route::apiResource('salles', SalleController::class);
 
 // Routes d'export pour les filières
 Route::prefix('filieres')->group(function () {
@@ -69,4 +69,3 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-

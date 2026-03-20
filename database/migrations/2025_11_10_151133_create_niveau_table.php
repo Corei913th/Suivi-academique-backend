@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('niveau', function (Blueprint $table) {
-            $table->string("code_niveau", 10)->primary();
-            $table->string("label_niveau",256);
-            $table->text("desc_niveau",256);
-            $table->string("code_filiere",20);
-            $table->foreign("code_filiere")->references("code_filiere")->on("filiere");
+            $table->string('code_niveau', 10)->primary();
+            $table->string('label_niveau', 256);
+            $table->text('desc_niveau', 256);
+            $table->string('code_filiere', 20);
+            $table->foreign('code_filiere')->references('code_filiere')->on('filiere');
             $table->timestamps();
         });
     }

@@ -17,14 +17,14 @@ class PersonnelFactory extends Factory
     public function definition(): array
     {
         return [
-            "code_pers" => $this->faker->unique()->bothify('PERS-###'),
-            "nom_pers" => $this->faker->lastName(),
-            "prenom_pers" => $this->faker->firstName(),
-            "sexe_pers" => $this->faker->randomElement(['M', 'F']),
-            "phone_pers" => $this->faker->phoneNumber(),
-            "login_pers" => $this->faker->unique()->userName(),
-            "pwd_pers" => \Illuminate\Support\Facades\Hash::make('password'), // Mot de passe par défaut
-            "type_pers" => $this->faker->randomElement(["ENSEIGNANT", "RESPONSABLE ACADEMIQUE", "RESPONSABLE DISCIPLINE"]),
+            'code_pers' => $this->faker->unique()->bothify('PERS-###'),
+            'nom_pers' => $this->faker->lastName(),
+            'prenom_pers' => $this->faker->firstName(),
+            'sexe_pers' => $this->faker->randomElement(['M', 'F']),
+            'phone_pers' => $this->faker->phoneNumber(),
+            'login_pers' => $this->faker->unique()->userName(),
+            'pwd_pers' => \Illuminate\Support\Facades\Hash::make('password'), // Mot de passe par défaut
+            'type_pers' => $this->faker->randomElement(['ENSEIGNANT', 'RESPONSABLE ACADEMIQUE', 'RESPONSABLE DISCIPLINE']),
         ];
     }
 }

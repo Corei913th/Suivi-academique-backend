@@ -3,27 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Personnel;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-
-use Carbon\Carbon;
 use App\Services\AuditLogger;
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            "login_pers" => "required|email",
-            "pwd_pers" => "required|string|min:6",
+            'login_pers' => 'required|email',
+            'pwd_pers' => 'required|string|min:6',
         ]);
 
-        $personnel = Personnel::where("login_pers", $credentials["login_pers"])->first();
+        $personnel = Personnel::where('login_pers', $credentials['login_pers'])->first();
 
-        if (!$personnel || !Hash::check($credentials["pwd_pers"], $personnel->pwd_pers)) {
+        if (! $personnel || ! Hash::check($credentials['pwd_pers'], $personnel->pwd_pers)) {
             // Log la tentative échouée
-            AuditLogger::logLogin($credentials["login_pers"], false);
+            AuditLogger::logLogin($credentials['login_pers'], false);
+
             return response()->json(['message' => 'Invalid login or password'], 401);
         }
 
@@ -40,10 +39,10 @@ class AuthController extends Controller
 
         // Créer un nouveau token
         $expiration = Carbon::now()->addDays(1);
-        $token = $personnel->createToken('user_token', ["*"], $expiration)->plainTextToken;
+        $token = $personnel->createToken('user_token', ['*'], $expiration)->plainTextToken;
 
         // Log la connexion réussie
-        AuditLogger::logLogin($credentials["login_pers"], true, $personnel->code_pers);
+        AuditLogger::logLogin($credentials['login_pers'], true, $personnel->code_pers);
 
         // Préparer les données de l'utilisateur sans le mot de passe
         $userData = [
@@ -57,12 +56,12 @@ class AuthController extends Controller
         ];
 
         return response()->json([
-            "success" => true,
-            "message" => "Login successful.",
-            "user" => $userData,
-            "access_token" => $token,
-            "token_type" => "Bearer",
-            "expires_at" => $expiration->toDateTimeString(),
+            'success' => true,
+            'message' => 'Login successful.',
+            'user' => $userData,
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'expires_at' => $expiration->toDateTimeString(),
         ]);
     }
 

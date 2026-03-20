@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Filiere;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Niveau>
@@ -17,10 +17,10 @@ class NiveauFactory extends Factory
      */
     public function definition(): array
     {
-        return [       
-            "label_niveau"=> $this->faker->words(2,true),
-            "desc_niveau"=> $this->faker->paragraph(),
-            "code_filiere"=> Filiere::inRandomOrder()->first()->code_filiere,           
+        return [
+            'label_niveau' => $this->faker->words(2, true),
+            'desc_niveau' => $this->faker->paragraph(),
+            'code_filiere' => Filiere::inRandomOrder()->first()->code_filiere,
         ];
     }
 }

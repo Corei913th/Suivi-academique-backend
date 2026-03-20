@@ -22,41 +22,42 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $statut
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Personnel $personnel
  * @property Ec $ec
- *
- * @package App\Models
  */
 class Enseigne extends Model
 {
-	use HasFactory;
-	protected $table = 'enseigne';
-	public $incrementing = false; // No single primary key
-	public $timestamps = true;
-	protected $casts = [
-		'code_ec' => 'int',
-		'nbh_heure' => 'int',
-		'heure_debut' => 'date',
-		'heure_fin' => 'date'
-	];
+    use HasFactory;
 
-	protected $fillable = [
-		'code_pers',
-		'code_ec',
-		'nbh_heure',
-		'heure_debut',
-		'heure_fin',
-		'statut'
-	];
+    protected $table = 'enseigne';
 
-	public function personnel(): BelongsTo
-	{
-		return $this->belongsTo(Personnel::class, 'code_pers', 'code_pers');
-	}
+    public $incrementing = false; // No single primary key
 
-	public function ec(): BelongsTo
-	{
-		return $this->belongsTo(Ec::class, 'code_ec', 'code_ec');
-	}
+    public $timestamps = true;
+
+    protected $casts = [
+        'code_ec' => 'int',
+        'nbh_heure' => 'int',
+        'heure_debut' => 'date',
+        'heure_fin' => 'date',
+    ];
+
+    protected $fillable = [
+        'code_pers',
+        'code_ec',
+        'nbh_heure',
+        'heure_debut',
+        'heure_fin',
+        'statut',
+    ];
+
+    public function personnel(): BelongsTo
+    {
+        return $this->belongsTo(Personnel::class, 'code_pers', 'code_pers');
+    }
+
+    public function ec(): BelongsTo
+    {
+        return $this->belongsTo(Ec::class, 'code_ec', 'code_ec');
+    }
 }

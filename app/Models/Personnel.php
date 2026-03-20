@@ -8,11 +8,9 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
-
 
 /**
  * Class Personnel
@@ -27,41 +25,42 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $type_pers
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Programmation> $programmations
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Enseigne> $enseignes
- *
- * @package App\Models
  */
 class Personnel extends Authenticatable
 {
-	use HasFactory;
-	use HasApiTokens;
+    use HasApiTokens;
+    use HasFactory;
 
-	protected $table = 'personnel';
-	protected $primaryKey = 'code_pers';
-	public $incrementing = false;
-	protected $keyType = 'string';
-	public $timestamps = true;
+    protected $table = 'personnel';
 
-	protected $fillable = [
-		'code_pers',
-		'nom_pers',
-		'prenom_pers',
-		'sexe_pers',
-		'phone_pers',
-		'login_pers',
-		'pwd_pers',
-		'type_pers'
-	];
+    protected $primaryKey = 'code_pers';
 
-	public function programmations(): HasMany
-	{
-		return $this->hasMany(Programmation::class, 'code_pers', 'code_pers');
-	}
+    public $incrementing = false;
 
-	public function enseignes(): HasMany
-	{
-		return $this->hasMany(Enseigne::class, 'code_pers', 'code_pers');
-	}
+    protected $keyType = 'string';
+
+    public $timestamps = true;
+
+    protected $fillable = [
+        'code_pers',
+        'nom_pers',
+        'prenom_pers',
+        'sexe_pers',
+        'phone_pers',
+        'login_pers',
+        'pwd_pers',
+        'type_pers',
+    ];
+
+    public function programmations(): HasMany
+    {
+        return $this->hasMany(Programmation::class, 'code_pers', 'code_pers');
+    }
+
+    public function enseignes(): HasMany
+    {
+        return $this->hasMany(Enseigne::class, 'code_pers', 'code_pers');
+    }
 }

@@ -13,6 +13,7 @@ class LoginCredentialsMail extends Mailable
     use Queueable, SerializesModels;
 
     public $personnel;
+
     public $password;
 
     /**

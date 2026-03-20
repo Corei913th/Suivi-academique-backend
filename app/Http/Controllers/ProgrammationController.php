@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Programmation;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use App\Services\AuditLogger;
 
 class ProgrammationController extends Controller
 {
@@ -16,20 +16,25 @@ class ProgrammationController extends Controller
      *     path="/api/programmations",
      *     summary="Récupérer tous les programmations",
      *     tags={"Programmations"},
+     *
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         required=false,
      *         description="Numéro de la page (par défaut 1)",
+     *
      *         @OA\Schema(type="integer", default=1)
      *     ),
+     *
      *     @OA\Parameter(
      *         name="per_page",
      *         in="query",
      *         required=false,
      *         description="Nombre d'éléments par page (par défaut 10)",
+     *
      *         @OA\Schema(type="integer", default=10)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Liste paginée des programmations"
@@ -40,6 +45,7 @@ class ProgrammationController extends Controller
     {
         $perPage = request('per_page', 10);
         $programmations = Programmation::with(['ec', 'salle', 'personnel'])->paginate($perPage);
+
         return response()->json($programmations, 200);
     }
 
@@ -71,8 +77,9 @@ class ProgrammationController extends Controller
                     'num_salle' => $validatedData['num_salle'],
                     'date' => $validatedData['date'],
                 ], 'warning');
+
                 return response()->json([
-                    'message' => 'Conflit de programmation : la salle est déjà réservée pour cette période'
+                    'message' => 'Conflit de programmation : la salle est déjà réservée pour cette période',
                 ], 409);
             }
 
@@ -87,7 +94,7 @@ class ProgrammationController extends Controller
 
             return response()->json([
                 'message' => 'Programmation créée avec succès',
-                'data' => $programmation
+                'data' => $programmation,
             ], 201);
 
         } catch (\Throwable $th) {
@@ -95,8 +102,9 @@ class ProgrammationController extends Controller
                 throw $th;
             }
             AuditLogger::logError('CREATE_PROGRAMMATION', $th->getMessage());
+
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -105,7 +113,7 @@ class ProgrammationController extends Controller
     {
         try {
             // Comme la clé primaire est composite, on doit chercher par les 3 clés
-            $programmation = Programmation::where('code_ec', (int)$request->query('code_ec'))
+            $programmation = Programmation::where('code_ec', (int) $request->query('code_ec'))
                 ->where('num_salle', $request->query('num_salle'))
                 ->where('code_pers', $request->query('code_pers'))
                 ->with(['ec', 'salle', 'personnel'])
@@ -114,7 +122,7 @@ class ProgrammationController extends Controller
             return response()->json($programmation, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Programmation non trouvée'
+                'message' => 'Programmation non trouvée',
             ], 404);
         }
     }
@@ -153,7 +161,7 @@ class ProgrammationController extends Controller
 
             return response()->json([
                 'message' => 'Programmation modifiée avec succès',
-                'data' => $programmation
+                'data' => $programmation,
             ], 200);
 
         } catch (\Throwable $th) {
@@ -161,8 +169,9 @@ class ProgrammationController extends Controller
                 throw $th;
             }
             AuditLogger::logError('UPDATE_PROGRAMMATION', $th->getMessage());
+
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -170,20 +179,20 @@ class ProgrammationController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $programmation = Programmation::where('code_ec', (int)$request->query('code_ec'))
+            $programmation = Programmation::where('code_ec', (int) $request->query('code_ec'))
                 ->where('num_salle', $request->query('num_salle'))
                 ->where('code_pers', $request->query('code_pers'))
                 ->first();
 
-            if (!$programmation) {
+            if (! $programmation) {
                 return response()->json([
-                    'message' => 'Programmation non trouvée'
+                    'message' => 'Programmation non trouvée',
                 ], 404);
             }
 
             $deletedData = $programmation->toArray();
-            
-            Programmation::where('code_ec', (int)$request->query('code_ec'))
+
+            Programmation::where('code_ec', (int) $request->query('code_ec'))
                 ->where('num_salle', $request->query('num_salle'))
                 ->where('code_pers', $request->query('code_pers'))
                 ->delete();
@@ -194,13 +203,14 @@ class ProgrammationController extends Controller
                 $deletedData);
 
             return response()->json([
-                'message' => 'Suppression réussie'
+                'message' => 'Suppression réussie',
             ], 200);
 
         } catch (\Throwable $th) {
             AuditLogger::logError('DELETE_PROGRAMMATION', $th->getMessage());
+
             return response()->json([
-                'message' => 'Erreur lors de la suppression'
+                'message' => 'Erreur lors de la suppression',
             ], 500);
         }
     }
@@ -215,7 +225,7 @@ class ProgrammationController extends Controller
             return response()->json($programmations, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -230,7 +240,7 @@ class ProgrammationController extends Controller
             return response()->json($programmations, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -245,7 +255,7 @@ class ProgrammationController extends Controller
             return response()->json($programmations, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }

@@ -10,6 +10,7 @@ class FiliereWebController extends Controller
     public function index()
     {
         $filieres = Filiere::all();
+
         return view('filiere', compact('filieres'));
     }
 

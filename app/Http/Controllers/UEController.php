@@ -14,20 +14,25 @@ class UEController extends Controller
      *     path="/api/ues",
      *     summary="Récupérer tous les UEs",
      *     tags={"UEs"},
+     *
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         required=false,
      *         description="Numéro de la page (par défaut 1)",
+     *
      *         @OA\Schema(type="integer", default=1)
      *     ),
+     *
      *     @OA\Parameter(
      *         name="per_page",
      *         in="query",
      *         required=false,
      *         description="Nombre d'éléments par page (par défaut 10)",
+     *
      *         @OA\Schema(type="integer", default=10)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Liste paginée des UEs"
@@ -38,6 +43,7 @@ class UEController extends Controller
     {
         $perPage = request('per_page', 10);
         $ue = Ue::paginate($perPage);
+
         return response()->json($ue, 200);
     }
 
@@ -55,12 +61,12 @@ class UEController extends Controller
             Ue::create($validatedData);
 
             return response()->json(
-                ["message" => "Ue créée avec succès"],
+                ['message' => 'Ue créée avec succès'],
                 201
             );
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -69,10 +75,11 @@ class UEController extends Controller
     {
         try {
             $ue = Ue::with(['niveau', 'ecs'])->findOrFail($code_ue);
+
             return response()->json($ue, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'UE non trouvée'
+                'message' => 'UE non trouvée',
             ], 404);
         }
     }
@@ -92,11 +99,11 @@ class UEController extends Controller
 
             return response()->json([
                 'message' => 'UE modifiée avec succès',
-                'data' => $ue
+                'data' => $ue,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -108,12 +115,12 @@ class UEController extends Controller
             $ue->delete();
 
             return response()->json(
-                ["message" => "Suppression réussie"],
+                ['message' => 'Suppression réussie'],
                 200
             );
         } catch (\Throwable $th) {
             return response()->json(
-                ["message" => "Ue non trouvée"],
+                ['message' => 'Ue non trouvée'],
                 404
             );
         }

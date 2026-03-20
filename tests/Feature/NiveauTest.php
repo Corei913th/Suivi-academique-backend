@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\Niveau;
 use App\Models\Filiere;
+use App\Models\Niveau;
+use Tests\TestCase;
 
 class NiveauTest extends TestCase
 {
@@ -21,20 +21,19 @@ class NiveauTest extends TestCase
         // Création d'un test ID unique
         $filiereCode = Filiere::inRandomOrder()->first()->code_filiere;
 
-        $code = 'TEST-' . rand(1000, 9999);
+        $code = 'TEST-'.rand(1000, 9999);
         $data = [
             'code_niveau' => $code,
-            'label_niveau' => 'Niveau Test ' . rand(100, 999),
+            'label_niveau' => 'Niveau Test '.rand(100, 999),
             'desc_niveau' => 'Description test',
-            'code_filiere' => $filiereCode
+            'code_filiere' => $filiereCode,
         ];
 
         $response = $this->postJson('/api/niveaux', $data);
 
         $response->assertStatus(201);
 
-       
-        $id = $response->json('code_niveau'); 
+        $id = $response->json('code_niveau');
         if ($id) {
             Niveau::destroy($id);
         }
@@ -45,10 +44,10 @@ class NiveauTest extends TestCase
     {
         $filiereCode = Filiere::inRandomOrder()->first()->code_filiere;
         $niveau = Niveau::create([
-            'code_niveau' => 'UPD-' . rand(1000, 9999),
+            'code_niveau' => 'UPD-'.rand(1000, 9999),
             'label_niveau' => 'Old Label',
             'desc_niveau' => 'Old Desc',
-            'code_filiere' => $filiereCode
+            'code_filiere' => $filiereCode,
         ]);
 
         $updateData = ['label_niveau' => 'New Label'];
@@ -64,10 +63,10 @@ class NiveauTest extends TestCase
     {
         $filiereCode = Filiere::inRandomOrder()->first()->code_filiere;
         $niveau = Niveau::create([
-            'code_niveau' => 'DEL-' . rand(1000, 9999),
+            'code_niveau' => 'DEL-'.rand(1000, 9999),
             'label_niveau' => 'To Delete',
             'desc_niveau' => 'To Delete',
-            'code_filiere' => $filiereCode
+            'code_filiere' => $filiereCode,
         ]);
 
         $response = $this->deleteJson("/api/niveaux/{$niveau->code_niveau}");

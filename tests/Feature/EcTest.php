@@ -2,13 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Ec;
 use App\Models\Ue;
+use Tests\TestCase;
 
 class EcTest extends TestCase
 {
-
     public function test_get_ecs()
     {
         $response = $this->getJson('/api/ecs');
@@ -22,7 +21,7 @@ class EcTest extends TestCase
         $data = [
             'label_ec' => 'EC Test',
             'desc_ec' => 'Description EC',
-            'code_ue' => $ueCode
+            'code_ue' => $ueCode,
         ];
 
         $response = $this->postJson('/api/ecs', $data);
@@ -31,8 +30,9 @@ class EcTest extends TestCase
 
         // Nettoyage via ID récupéré
         $id = $response->json('code_ec');
-        if ($id)
+        if ($id) {
             Ec::destroy($id);
+        }
     }
 
     public function test_update_ec()
@@ -41,7 +41,7 @@ class EcTest extends TestCase
         $ec = Ec::create([
             'label_ec' => 'Old EC',
             'desc_ec' => 'Old Desc',
-            'code_ue' => $ueCode
+            'code_ue' => $ueCode,
         ]);
 
         $updateData = ['label_ec' => 'New EC Label'];
@@ -59,7 +59,7 @@ class EcTest extends TestCase
         $ec = Ec::create([
             'label_ec' => 'To Delete',
             'desc_ec' => 'To Delete',
-            'code_ue' => $ueCode
+            'code_ue' => $ueCode,
         ]);
 
         $response = $this->deleteJson("/api/ecs/{$ec->code_ec}");

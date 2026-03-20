@@ -19,31 +19,34 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $statut
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Programmation> $programmations
- *
- * @package App\Models
  */
 class Salle extends Model
 {
-	use HasFactory;
-	protected $table = 'salle';
-	protected $primaryKey = 'num_sale';
-	public $incrementing = false;
-	protected $keyType = 'string';
-	public $timestamps = true;
-	protected $casts = [
-		'contenance' => 'int'
-	];
+    use HasFactory;
 
-	protected $fillable = [
-		'num_sale',
-		'contenance',
-		'statut'
-	];
+    protected $table = 'salle';
 
-	public function programmations(): HasMany
-	{
-		return $this->hasMany(Programmation::class, 'num_salle', 'num_sale');
-	}
+    protected $primaryKey = 'num_sale';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public $timestamps = true;
+
+    protected $casts = [
+        'contenance' => 'int',
+    ];
+
+    protected $fillable = [
+        'num_sale',
+        'contenance',
+        'statut',
+    ];
+
+    public function programmations(): HasMany
+    {
+        return $this->hasMany(Programmation::class, 'num_salle', 'num_sale');
+    }
 }

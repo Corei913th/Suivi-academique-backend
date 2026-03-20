@@ -2,16 +2,15 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\Programmation;
-use App\Models\Personnel;
 use App\Models\Ec;
+use App\Models\Personnel;
+use App\Models\Programmation;
 use App\Models\Salle;
 use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class ProgrammationTest extends TestCase
 {
-
     public function test_get_programmations()
     {
         $response = $this->getJson('/api/programmations');
@@ -24,11 +23,10 @@ class ProgrammationTest extends TestCase
         $ecId = Ec::inRandomOrder()->first()->code_ec;
         $salleId = Salle::inRandomOrder()->first()->num_sale;
 
-
         Programmation::where([
             'code_pers' => $persId,
             'code_ec' => $ecId,
-            'num_salle' => $salleId
+            'num_salle' => $salleId,
         ])->delete();
 
         $data = [
@@ -39,7 +37,7 @@ class ProgrammationTest extends TestCase
             'heure_debut' => '06:00',
             'heure_fin' => '07:00',
             'nbre_heure' => 1,
-            'status' => 'planifié'
+            'status' => 'planifié',
         ];
 
         $response = $this->postJson('/api/programmations', $data);
@@ -50,7 +48,7 @@ class ProgrammationTest extends TestCase
         Programmation::where([
             'code_pers' => $persId,
             'code_ec' => $ecId,
-            'num_salle' => $salleId
+            'num_salle' => $salleId,
         ])->delete();
     }
 
@@ -71,10 +69,10 @@ class ProgrammationTest extends TestCase
             'code_ec' => $ecId,
             'num_salle' => $salleId,
             'status' => 'terminé',
-            'nbre_heure' => 4
+            'nbre_heure' => 4,
         ];
 
-        $response = $this->putJson("/api/programmations/update", $updateData);
+        $response = $this->putJson('/api/programmations/update', $updateData);
 
         if ($response->status() !== 200) {
             dump($response->json());
@@ -95,7 +93,7 @@ class ProgrammationTest extends TestCase
         \DB::table('programmation')->where([
             'code_pers' => $persId,
             'code_ec' => $ecId,
-            'num_salle' => $salleId
+            'num_salle' => $salleId,
         ])->delete();
 
         // Force create via DB table to avoid Eloquent composite PK issues
@@ -112,15 +110,14 @@ class ProgrammationTest extends TestCase
             'updated_at' => now(),
         ]);
 
-        // Verify it exists 
+        // Verify it exists
         $this->assertDatabaseHas('programmation', [
             'code_pers' => $persId,
             'code_ec' => $ecId,
-            'num_salle' => $salleId
+            'num_salle' => $salleId,
         ]);
 
-   
-        $url = "/api/programmations/delete?code_pers=" . urlencode($persId) . "&code_ec=" . urlencode($ecId) . "&num_salle=" . urlencode($salleId);
+        $url = '/api/programmations/delete?code_pers='.urlencode($persId).'&code_ec='.urlencode($ecId).'&num_salle='.urlencode($salleId);
 
         $response = $this->deleteJson($url);
 
@@ -129,7 +126,7 @@ class ProgrammationTest extends TestCase
         $this->assertDatabaseMissing('programmation', [
             'code_pers' => $persId,
             'code_ec' => $ecId,
-            'num_salle' => $salleId
+            'num_salle' => $salleId,
         ]);
     }
 }

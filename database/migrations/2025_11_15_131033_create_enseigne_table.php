@@ -12,15 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('enseigne', function (Blueprint $table) {
-            $table->string("code_pers");
-            $table->unsignedInteger("code_ec");
-            $table->integer("nbh_heure")->nullable(); 
-            $table->date("heure_debut")->nullable();
-            $table->date("heure_fin")->nullable();
-            $table->string("statut", 50)->nullable();
-            $table->foreign("code_pers")->references("code_pers")->on("personnel");
-            $table->foreign("code_ec")->references("code_ec")->on("ec");
-
+            $table->string('code_pers');
+            $table->unsignedInteger('code_ec');
+            $table->integer('nbh_heure')->nullable();
+            $table->date('heure_debut')->nullable();
+            $table->date('heure_fin')->nullable();
+            $table->string('statut', 50)->nullable();
+            $table->foreign('code_pers')->references('code_pers')->on('personnel');
+            $table->foreign('code_ec')->references('code_ec')->on('ec');
 
             $table->timestamps();
         });

@@ -14,20 +14,25 @@ class SalleController extends Controller
      *     path="/api/salles",
      *     summary="Récupérer tous les salles",
      *     tags={"Salles"},
+     *
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         required=false,
      *         description="Numéro de la page (par défaut 1)",
+     *
      *         @OA\Schema(type="integer", default=1)
      *     ),
+     *
      *     @OA\Parameter(
      *         name="per_page",
      *         in="query",
      *         required=false,
      *         description="Nombre d'éléments par page (par défaut 10)",
+     *
      *         @OA\Schema(type="integer", default=10)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Liste paginée des salles"
@@ -38,6 +43,7 @@ class SalleController extends Controller
     {
         $perPage = request('per_page', 10);
         $salles = Salle::with('programmations')->paginate($perPage);
+
         return response()->json($salles, 200);
     }
 
@@ -54,12 +60,12 @@ class SalleController extends Controller
 
             return response()->json([
                 'message' => 'Salle créée avec succès',
-                'data' => $salle
+                'data' => $salle,
             ], 201);
 
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -68,10 +74,11 @@ class SalleController extends Controller
     {
         try {
             $salle = Salle::with('programmations')->findOrFail($num_sale);
+
             return response()->json($salle, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Salle non trouvée'
+                'message' => 'Salle non trouvée',
             ], 404);
         }
     }
@@ -90,12 +97,12 @@ class SalleController extends Controller
 
             return response()->json([
                 'message' => 'Salle modifiée avec succès',
-                'data' => $salle
+                'data' => $salle,
             ], 200);
 
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -107,12 +114,12 @@ class SalleController extends Controller
             $salle->delete();
 
             return response()->json([
-                'message' => 'Suppression réussie'
+                'message' => 'Suppression réussie',
             ], 200);
 
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Salle non trouvée'
+                'message' => 'Salle non trouvée',
             ], 404);
         }
     }

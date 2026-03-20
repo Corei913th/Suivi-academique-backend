@@ -2,13 +2,12 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\Ue;
 use App\Models\Niveau;
+use App\Models\Ue;
+use Tests\TestCase;
 
 class UeTest extends TestCase
 {
-
     public function test_get_ues()
     {
         $response = $this->getJson('/api/ues');
@@ -18,13 +17,13 @@ class UeTest extends TestCase
     public function test_create_ue()
     {
         $niveauId = Niveau::inRandomOrder()->first()->code_niveau;
-        $code = 'UE-TEST-' . rand(1000, 9999);
+        $code = 'UE-TEST-'.rand(1000, 9999);
 
         $data = [
             'code_ue' => $code,
             'label_ue' => 'UE de Test',
             'desc_ue' => 'Description',
-            'code_niveau' => $niveauId
+            'code_niveau' => $niveauId,
         ];
 
         $response = $this->postJson('/api/ues', $data);
@@ -37,13 +36,13 @@ class UeTest extends TestCase
     public function test_update_ue()
     {
         $niveauId = Niveau::inRandomOrder()->first()->code_niveau;
-        $code = 'UE-UPD-' . rand(1000, 9999);
+        $code = 'UE-UPD-'.rand(1000, 9999);
 
         $ue = Ue::create([
             'code_ue' => $code,
             'label_ue' => 'Old Label',
             'desc_ue' => 'Old Desc',
-            'code_niveau' => $niveauId
+            'code_niveau' => $niveauId,
         ]);
 
         $updateData = ['label_ue' => 'New Label'];
@@ -58,13 +57,13 @@ class UeTest extends TestCase
     public function test_delete_ue()
     {
         $niveauId = Niveau::inRandomOrder()->first()->code_niveau;
-        $code = 'UE-DEL-' . rand(1000, 9999);
+        $code = 'UE-DEL-'.rand(1000, 9999);
 
         Ue::create([
             'code_ue' => $code,
             'label_ue' => 'To Delete',
             'desc_ue' => 'To Delete',
-            'code_niveau' => $niveauId
+            'code_niveau' => $niveauId,
         ]);
 
         $response = $this->deleteJson("/api/ues/{$code}");

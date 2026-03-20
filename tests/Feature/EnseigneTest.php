@@ -2,14 +2,13 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\Models\Ec;
 use App\Models\Enseigne;
 use App\Models\Personnel;
-use App\Models\Ec;
+use Tests\TestCase;
 
 class EnseigneTest extends TestCase
 {
-
     public function test_get_enseignes()
     {
         $response = $this->getJson('/api/enseignes');
@@ -34,7 +33,7 @@ class EnseigneTest extends TestCase
             'nbh_heure' => 10,
             'heure_debut' => '2025-01-01',
             'heure_fin' => '2025-06-01',
-            'statut' => 'actif'
+            'statut' => 'actif',
         ];
 
         $response = $this->postJson('/api/enseignes', $data);
@@ -49,7 +48,7 @@ class EnseigneTest extends TestCase
     {
         $enseigne = Enseigne::inRandomOrder()->first();
 
-        if (!$enseigne) {
+        if (! $enseigne) {
             $persId = Personnel::inRandomOrder()->first()->code_pers;
             $ecId = Ec::inRandomOrder()->first()->code_ec;
             Enseigne::where(['code_pers' => $persId, 'code_ec' => $ecId])->delete();
@@ -63,10 +62,10 @@ class EnseigneTest extends TestCase
             'code_pers' => $persId,
             'code_ec' => $ecId,
             'nbh_heure' => 50,
-            'statut' => 'terminé'
+            'statut' => 'terminé',
         ];
 
-        $response = $this->putJson("/api/enseignes/update", $updateData);
+        $response = $this->putJson('/api/enseignes/update', $updateData);
 
         $response->assertStatus(200);
 
@@ -77,7 +76,7 @@ class EnseigneTest extends TestCase
     {
         $enseigne = Enseigne::inRandomOrder()->first();
 
-        if (!$enseigne) {
+        if (! $enseigne) {
             $persId = Personnel::inRandomOrder()->first()->code_pers;
             $ecId = Ec::inRandomOrder()->first()->code_ec;
             Enseigne::where(['code_pers' => $persId, 'code_ec' => $ecId])->delete();

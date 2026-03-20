@@ -17,9 +17,9 @@ class SalleFactory extends Factory
     public function definition(): array
     {
         return [
-            "num_sale" => $this->faker->unique()->bothify('SAL-###'),
-            "contenance" => $this->faker->numberBetween(20, 200),
-            "statut" => $this->faker->randomElement(['disponible', 'occupée', 'maintenance']),
+            'num_sale' => $this->faker->unique()->bothify('SAL-###'),
+            'contenance' => $this->faker->numberBetween(20, 200),
+            'statut' => $this->faker->randomElement(['disponible', 'occupée', 'maintenance']),
         ];
     }
 }

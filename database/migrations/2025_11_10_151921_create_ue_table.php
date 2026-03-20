@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ue', function (Blueprint $table) {
-            $table->string("code_ue")->primary();
-            $table->string("label_ue",256);
-            $table->text("desc_ue",256);
-            $table->string("code_niveau", 10);
-            $table->foreign("code_niveau")->references("code_niveau")->on("niveau")->onDelete("cascade");
+            $table->string('code_ue')->primary();
+            $table->string('label_ue', 256);
+            $table->text('desc_ue', 256);
+            $table->string('code_niveau', 10);
+            $table->foreign('code_niveau')->references('code_niveau')->on('niveau')->onDelete('cascade');
             $table->timestamps();
         });
     }

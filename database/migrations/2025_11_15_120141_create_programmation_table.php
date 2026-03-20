@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('programmation', function (Blueprint $table) {
             $table->unsignedInteger('code_ec');
-            $table->string('num_salle',50);
-            $table->string('code_pers',50);
+            $table->string('num_salle', 50);
+            $table->string('code_pers', 50);
             $table->date('date');
             $table->time('heure_debut');
             $table->time('heure_fin');
             $table->integer('nbre_heure');
             $table->string('status');
             $table->timestamps();
-            $table->primary(['code_ec','num_salle','code_pers']);
-            $table->foreign('code_ec')->references('code_ec')->on ('ec')->onDelete('cascade');
-            $table->foreign('num_salle')->references('num_sale')->on ('salle')->onDelete('cascade');
-            $table->foreign('code_pers')->references('code_pers')->on ('personnel')->onDelete('cascade');
+            $table->primary(['code_ec', 'num_salle', 'code_pers']);
+            $table->foreign('code_ec')->references('code_ec')->on('ec')->onDelete('cascade');
+            $table->foreign('num_salle')->references('num_sale')->on('salle')->onDelete('cascade');
+            $table->foreign('code_pers')->references('code_pers')->on('personnel')->onDelete('cascade');
         });
     }
 

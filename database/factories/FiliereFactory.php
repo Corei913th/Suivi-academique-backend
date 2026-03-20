@@ -17,9 +17,9 @@ class FiliereFactory extends Factory
     public function definition(): array
     {
         return [
-            "code_filiere"=> $this->faker->unique()->bothify('FILIERE-###'),            
-            "label_filiere"=> $this->faker->words(3, true),
-            "desc_filiere"=> $this->faker->paragraph(),
+            'code_filiere' => $this->faker->unique()->bothify('FILIERE-###'),
+            'label_filiere' => $this->faker->words(3, true),
+            'desc_filiere' => $this->faker->paragraph(),
         ];
     }
 }

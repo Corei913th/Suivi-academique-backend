@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Filiere;
-use Illuminate\Http\Request;
-use App\Services\AuditLogger;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\FiliereExport;
+use App\Models\Filiere;
+use App\Services\AuditLogger;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * @OA\Info(
@@ -28,20 +28,25 @@ class FiliereController extends Controller
      *     path="/api/filieres",
      *     summary="Récupérer toutes les filières",
      *     tags={"Filières"},
+     *
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         required=false,
      *         description="Numéro de la page (par défaut 1)",
+     *
      *         @OA\Schema(type="integer", default=1)
      *     ),
+     *
      *     @OA\Parameter(
      *         name="per_page",
      *         in="query",
      *         required=false,
      *         description="Nombre d'éléments par page (par défaut 10)",
+     *
      *         @OA\Schema(type="integer", default=10)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Liste paginée des filières"
@@ -52,6 +57,7 @@ class FiliereController extends Controller
     {
         $perPage = request('per_page', 10);
         $filieres = Filiere::with('niveaux')->paginate($perPage);
+
         return response()->json($filieres, 200);
     }
 
@@ -62,14 +68,18 @@ class FiliereController extends Controller
      *     path="/api/filieres",
      *     summary="Créer une filière",
      *     tags={"Filières"},
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
      *             required={"code_filiere", "label_filiere"},
+     *
      *             @OA\Property(property="code_filiere", type="string", example="INF01"),
      *             @OA\Property(property="label_filiere", type="string", example="Informatique")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=201,
      *         description="Filière créée"
@@ -98,14 +108,15 @@ class FiliereController extends Controller
             ]);
 
             return response()->json(
-                ["message" => "Filière créée avec succès"],
+                ['message' => 'Filière créée avec succès'],
                 201
             );
 
         } catch (\Throwable $th) {
             AuditLogger::logError('CREATE_FILIERE', $th->getMessage());
+
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -117,14 +128,17 @@ class FiliereController extends Controller
      *     path="/api/filieres/{code_filiere}",
      *     summary="Récupérer une filière",
      *     tags={"Filières"},
+     *
      *     @OA\Parameter(
      *         name="code_filiere",
      *         in="path",
      *         required=true,
      *         description="Code de la filière",
+     *
      *         @OA\Schema(type="string"),
      *         example="INF01"
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Filière trouvée"
@@ -139,10 +153,11 @@ class FiliereController extends Controller
     {
         try {
             $filiere = Filiere::with('niveaux')->findOrFail($code_filiere);
+
             return response()->json($filiere, 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Filière non trouvée'
+                'message' => 'Filière non trouvée',
             ], 404);
         }
     }
@@ -154,21 +169,27 @@ class FiliereController extends Controller
      *     path="/api/filieres/{code_filiere}",
      *     summary="Modifier une filière",
      *     tags={"Filières"},
+     *
      *     @OA\Parameter(
      *         name="code_filiere",
      *         in="path",
      *         required=true,
      *         description="Code de la filière",
+     *
      *         @OA\Schema(type="string"),
      *         example="INF01"
      *     ),
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="label_filiere", type="string", example="Informatique et Réseaux"),
      *             @OA\Property(property="desc_filiere", type="string", example="Description mise à jour")
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Filière modifiée"
@@ -197,13 +218,14 @@ class FiliereController extends Controller
 
             return response()->json([
                 'message' => 'Filière modifiée avec succès',
-                'data' => $filiere
+                'data' => $filiere,
             ], 200);
 
         } catch (\Throwable $th) {
             AuditLogger::logError('UPDATE_FILIERE', $th->getMessage(), ['code_filiere' => $code_filiere]);
+
             return response()->json([
-                'message' => $th->getMessage()
+                'message' => $th->getMessage(),
             ], 500);
         }
     }
@@ -215,14 +237,17 @@ class FiliereController extends Controller
      *     path="/api/filieres/{code_filiere}",
      *     summary="Supprimer une filière",
      *     tags={"Filières"},
+     *
      *     @OA\Parameter(
      *         name="code_filiere",
      *         in="path",
      *         required=true,
      *         description="Code de la filière",
+     *
      *         @OA\Schema(type="string"),
      *         example="INF01"
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Filière supprimée"
@@ -244,14 +269,15 @@ class FiliereController extends Controller
             AuditLogger::logDelete('Filiere', $code_filiere, $deletedData);
 
             return response()->json(
-                ["message" => "Suppression réussie"],
+                ['message' => 'Suppression réussie'],
                 200
             );
 
         } catch (\Throwable $th) {
             AuditLogger::logError('DELETE_FILIERE', $th->getMessage(), ['code_filiere' => $code_filiere]);
+
             return response()->json(
-                ["message" => "Filière non trouvée"],
+                ['message' => 'Filière non trouvée'],
                 404
             );
         }
@@ -268,11 +294,12 @@ class FiliereController extends Controller
                 'total_records' => Filiere::count(),
             ]);
 
-            return Excel::download(new FiliereExport(), 'filieres_' . date('Y-m-d_H-i-s') . '.xlsx');
+            return Excel::download(new FiliereExport, 'filieres_'.date('Y-m-d_H-i-s').'.xlsx');
         } catch (\Throwable $th) {
             AuditLogger::logError('EXPORT_FILIERES_EXCEL', $th->getMessage());
+
             return response()->json([
-                'message' => 'Erreur lors de l\'export Excel: ' . $th->getMessage()
+                'message' => 'Erreur lors de l\'export Excel: '.$th->getMessage(),
             ], 500);
         }
     }
@@ -293,12 +320,13 @@ class FiliereController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $filieres,
-                'filename' => 'filieres_' . date('Y-m-d_H-i-s')
+                'filename' => 'filieres_'.date('Y-m-d_H-i-s'),
             ], 200);
         } catch (\Throwable $th) {
             AuditLogger::logError('EXPORT_FILIERES_PDF', $th->getMessage());
+
             return response()->json([
-                'message' => 'Erreur lors de la préparation du PDF: ' . $th->getMessage()
+                'message' => 'Erreur lors de la préparation du PDF: '.$th->getMessage(),
             ], 500);
         }
     }

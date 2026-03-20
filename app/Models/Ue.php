@@ -21,36 +21,38 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int $code_niveau
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Niveau $niveau
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Ec> $ecs
- *
- * @package App\Models
  */
 class Ue extends Model
 {
-	use HasFactory;
-	protected $table = 'ue';
-	protected $primaryKey = 'code_ue';
-	public $incrementing = false;
-	protected $keyType = 'string';
-	public $timestamps = true;
-	// protected $casts removed because code_niveau is a string
+    use HasFactory;
 
-	protected $fillable = [
-		'code_ue',
-		'label_ue',
-		'desc_ue',
-		'code_niveau'
-	];
+    protected $table = 'ue';
 
-	public function niveau(): BelongsTo
-	{
-		return $this->belongsTo(Niveau::class, 'code_niveau', 'code_niveau');
-	}
+    protected $primaryKey = 'code_ue';
 
-	public function ecs(): HasMany
-	{
-		return $this->hasMany(Ec::class, 'code_ue', 'code_ue');
-	}
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public $timestamps = true;
+    // protected $casts removed because code_niveau is a string
+
+    protected $fillable = [
+        'code_ue',
+        'label_ue',
+        'desc_ue',
+        'code_niveau',
+    ];
+
+    public function niveau(): BelongsTo
+    {
+        return $this->belongsTo(Niveau::class, 'code_niveau', 'code_niveau');
+    }
+
+    public function ecs(): HasMany
+    {
+        return $this->hasMany(Ec::class, 'code_ue', 'code_ue');
+    }
 }

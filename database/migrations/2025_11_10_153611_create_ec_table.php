@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ec', function (Blueprint $table) {
-            $table->increments("code_ec");
-            $table->string("label_ec",256);
-            $table->text("desc_ec",256);
-            $table->string("code_ue");
-            $table->foreign("code_ue")->references("code_ue")->on("ue");
+            $table->increments('code_ec');
+            $table->string('label_ec', 256);
+            $table->text('desc_ec', 256);
+            $table->string('code_ue');
+            $table->foreign('code_ue')->references('code_ue')->on('ue');
             $table->timestamps();
         });
     }

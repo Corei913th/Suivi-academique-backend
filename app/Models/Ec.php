@@ -22,56 +22,58 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $support_cours
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Ue $ue
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Programmation> $programmations
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Enseigne> $enseignes
- *
- * @package App\Models
  */
 class Ec extends Model
 {
-	use HasFactory;
-	protected $table = 'ec';
-	protected $primaryKey = 'code_ec';
-	public $timestamps = true;
-	protected $casts = [
-		'code_ec' => 'int'
-	];
+    use HasFactory;
 
-	protected $appends = ['support_cours_url'];
+    protected $table = 'ec';
 
-	protected $fillable = [
-		'code_ec',
-		'label_ec',
-		'desc_ec',
-		'code_ue',
-		'support_cours'
-	];
+    protected $primaryKey = 'code_ec';
 
-	public function ue(): BelongsTo
-	{
-		return $this->belongsTo(Ue::class, 'code_ue', 'code_ue');
-	}
+    public $timestamps = true;
 
-	public function programmations(): HasMany
-	{
-		return $this->hasMany(Programmation::class, 'code_ec', 'code_ec');
-	}
+    protected $casts = [
+        'code_ec' => 'int',
+    ];
 
-	public function enseignes(): HasMany
-	{
-		return $this->hasMany(Enseigne::class, 'code_ec', 'code_ec');
-	}
+    protected $appends = ['support_cours_url'];
 
-	/**
-	 * Accesseur pour récupérer l'URL du fichier support_cours
-	 */
-	public function getSupportCoursUrlAttribute()
-	{
-		if ($this->support_cours) {
-			return asset('storage/supports-cours/' . $this->support_cours);
-		}
-		return null;
-	}
+    protected $fillable = [
+        'code_ec',
+        'label_ec',
+        'desc_ec',
+        'code_ue',
+        'support_cours',
+    ];
+
+    public function ue(): BelongsTo
+    {
+        return $this->belongsTo(Ue::class, 'code_ue', 'code_ue');
+    }
+
+    public function programmations(): HasMany
+    {
+        return $this->hasMany(Programmation::class, 'code_ec', 'code_ec');
+    }
+
+    public function enseignes(): HasMany
+    {
+        return $this->hasMany(Enseigne::class, 'code_ec', 'code_ec');
+    }
+
+    /**
+     * Accesseur pour récupérer l'URL du fichier support_cours
+     */
+    public function getSupportCoursUrlAttribute()
+    {
+        if ($this->support_cours) {
+            return asset('storage/supports-cours/'.$this->support_cours);
+        }
+
+        return null;
+    }
 }

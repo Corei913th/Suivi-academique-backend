@@ -4,16 +4,15 @@ namespace App\Exports;
 
 use App\Models\Ec;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
-use PhpOffice\PhpSpreadsheet\Style\Font;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class EcExport implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize
+class EcExport implements FromCollection, ShouldAutoSize, WithHeadings, WithStyles
 {
     public function collection()
     {
@@ -37,7 +36,7 @@ class EcExport implements FromCollection, WithHeadings, WithStyles, ShouldAutoSi
             'Description',
             'Unité d\'Enseignement',
             'Créé le',
-            'Modifié le'
+            'Modifié le',
         ];
     }
 

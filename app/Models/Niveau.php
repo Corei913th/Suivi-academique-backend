@@ -21,34 +21,37 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $code_filiere
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
  * @property Filiere $filiere
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Ue> $ues
- *
- * @package App\Models
  */
 class Niveau extends Model
 {
-	use HasFactory;
-	protected $table = 'niveau';
-	protected $primaryKey = 'code_niveau';
-	public $incrementing = false;
-	protected $keyType = 'string';
-	public $timestamps = true;
-	protected $fillable = [
-		'code_niveau',
-		'label_niveau',
-		'desc_niveau',
-		'code_filiere'
-	];
+    use HasFactory;
 
-	public function filiere(): BelongsTo
-	{
-		return $this->belongsTo(Filiere::class, 'code_filiere', 'code_filiere');
-	}
+    protected $table = 'niveau';
 
-	public function ues(): HasMany
-	{
-		return $this->hasMany(Ue::class, 'code_niveau', 'code_niveau');
-	}
+    protected $primaryKey = 'code_niveau';
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public $timestamps = true;
+
+    protected $fillable = [
+        'code_niveau',
+        'label_niveau',
+        'desc_niveau',
+        'code_filiere',
+    ];
+
+    public function filiere(): BelongsTo
+    {
+        return $this->belongsTo(Filiere::class, 'code_filiere', 'code_filiere');
+    }
+
+    public function ues(): HasMany
+    {
+        return $this->hasMany(Ue::class, 'code_niveau', 'code_niveau');
+    }
 }

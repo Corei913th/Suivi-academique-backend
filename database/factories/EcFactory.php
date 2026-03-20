@@ -17,9 +17,9 @@ class EcFactory extends Factory
     public function definition(): array
     {
         return [
-            "label_ec" => $this->faker->words(3, true),
-            "desc_ec" => $this->faker->paragraph(),
-            "code_ue" => \App\Models\Ue::inRandomOrder()->first()->code_ue,
+            'label_ec' => $this->faker->words(3, true),
+            'desc_ec' => $this->faker->paragraph(),
+            'code_ue' => \App\Models\Ue::inRandomOrder()->first()->code_ue,
         ];
     }
 }
